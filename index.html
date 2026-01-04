@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="th" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Landify Pro - สร้างเว็บไซต์แบบมืออาชีพ</title>
+    <meta name="description" content="เป็นระบบใหม่ครับ สร้างเว็บได้เอง แก้พิกเซล ลิ้งปลายทางได้เองครับ" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://landifypro.com/" />
+    <meta property="og:title" content="Landify Pro - สร้างเว็บไซต์แบบมืออาชีพ" />
+    <meta property="og:description" content="เป็นระบบใหม่ครับ สร้างเว็บได้เอง แก้พิกเซล ลิ้งปลายทางได้เองครับ" />
+    <meta property="og:image" content="https://landifypro.com/landy.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://landifypro.com/" />
+    <meta name="twitter:title" content="Landify Pro - สร้างเว็บไซต์แบบมืออาชีพ" />
+    <meta name="twitter:description" content="เป็นระบบใหม่ครับ สร้างเว็บได้เอง แก้พิกเซล ลิ้งปลายทางได้เองครับ" />
+    <meta name="twitter:image" content="https://landifypro.com/landy.png" />
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="/assets/index-CmO8Sx0d.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-BSgzVXhL.css">
+</head>
+  <body>
+    <div id="root"></div>
+    <script>
+      console.log('[index.html] HTML loaded at', new Date().toISOString());
+      console.log('[index.html] Root element:', document.getElementById('root'));
+      
+      // Global error handlers
+      window.addEventListener('error', function(e) {
+        console.error('[Global Error]', {
+          message: e.message,
+          filename: e.filename,
+          lineno: e.lineno,
+          colno: e.colno,
+          error: e.error
+        });
+      });
+      
+      window.addEventListener('unhandledrejection', function(e) {
+        console.error('[Unhandled Promise Rejection]', e.reason);
+      });
+      
+      // Check if React is available
+      setTimeout(() => {
+        const root = document.getElementById('root');
+        if (root && root.children.length === 0) {
+          console.warn('[index.html] Root element is empty after 2 seconds - React may not have rendered');
+        }
+      }, 2000);
+    </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"ca7dc2e75b7c4ffc96b8089f1994a350","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
