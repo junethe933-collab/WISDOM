@@ -17,12 +17,10 @@
 
     // ✅ Pixel ID: 1382347559953039
     fbq('init', '1382347559953039');
-    fbq('track', 'PageView');
+
+    // ❗️ ย้าย PageView ไปยิงหลังผ่าน Age Gate (ดูในสคริปต์ท้ายไฟล์)
+    // fbq('track', 'PageView');
   </script>
-  <noscript>
-    <img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=1382347559953039&ev=PageView&noscript=1"/>
-  </noscript>
   <!-- ✅ End Meta Pixel -->
 
   <style>
@@ -453,10 +451,73 @@
     }
 
     .footerNote{padding:18px 0; text-align:center; color:var(--muted); font-size:12px}
+
+    /* 🔞 Age Gate 20+ */
+    .age-gate{
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,.85);
+      backdrop-filter: blur(6px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:99999;
+    }
+    .age-card{
+      background:#ffffff;
+      border-radius:18px;
+      padding:28px 24px;
+      width:92%;
+      max-width:380px;
+      text-align:center;
+      box-shadow:0 20px 60px rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.25);
+    }
+    .age-card h2{
+      margin:0 0 10px;
+      font-size:22px;
+    }
+    .age-card p{
+      margin:0 0 18px;
+      color:#374151;
+      font-size:14px;
+      line-height:1.6;
+    }
+    .age-actions{
+      display:flex;
+      gap:12px;
+      margin-top:6px;
+    }
+    .age-btn{
+      flex:1;
+      padding:12px;
+      border-radius:999px;
+      border:none;
+      font-weight:900;
+      cursor:pointer;
+      font-size:14px;
+      user-select:none;
+    }
+    .age-btn.yes{background:#16a34a; color:#fff;}
+    .age-btn.no{background:#dc2626; color:#fff;}
+    .age-btn:active{transform: translateY(1px)}
   </style>
 </head>
 
 <body>
+  <!-- 🔞 Age Gate 20+ (ถามก่อนเข้าหน้าเว็บ) -->
+  <div id="ageGate" class="age-gate" aria-modal="true" role="dialog">
+    <div class="age-card">
+      <h2>🔞 ยืนยันอายุ</h2>
+      <p>คุณอายุ <b>มากกว่า 20 ปี</b> ใช่หรือไม่?</p>
+
+      <div class="age-actions">
+        <button class="age-btn yes" id="ageYes">ใช่</button>
+        <button class="age-btn no" id="ageNo">ไม่ใช่</button>
+      </div>
+    </div>
+  </div>
+
   <div class="wrap">
     <div class="topbar">
       <div class="brand">
@@ -699,6 +760,15 @@
       return payload;
     }
 
+    // ✅ ยิง PageView หลังผ่าน Age Gate (ยิงครั้งเดียว/ต่อแท็บ)
+    function firePageViewOnce(){
+      if (sessionStorage.getItem("pv_fired") === "1") return;
+      sessionStorage.setItem("pv_fired", "1");
+      if (typeof window.fbq === "function") {
+        window.fbq("track", "PageView");
+      }
+    }
+
     // date
     const now = new Date();
     $("#year").textContent = now.getFullYear();
@@ -878,6 +948,37 @@
     });
 
     window.addEventListener("resize", () => setActiveDot(getNearestIndex()));
+
+    /* =========================
+       🔞 Age Gate Logic (20+)
+       ========================= */
+    const ageGate = document.getElementById("ageGate");
+    const ageYes  = document.getElementById("ageYes");
+    const ageNo   = document.getElementById("ageNo");
+
+    function unlockSite(){
+      ageGate.style.display = "none";
+      firePageViewOnce(); // ✅ ยิง PageView หลังผ่าน gate
+      if (typeof window.fbq === "function") {
+        window.fbq("trackCustom", "AgeVerified20Plus");
+      }
+    }
+
+    // ถ้าเคยยืนยันแล้ว ไม่ต้องถามซ้ำ
+    if (localStorage.getItem("ageVerified20") === "true") {
+      unlockSite();
+    }
+
+    ageYes.addEventListener("click", () => {
+      localStorage.setItem("ageVerified20", "true");
+      unlockSite();
+    });
+
+    ageNo.addEventListener("click", () => {
+      alert("ขออภัย เนื้อหานี้สำหรับผู้มีอายุ 20 ปีขึ้นไปเท่านั้น");
+      // เปลี่ยนลิงก์ปลายทางได้ตามต้องการ
+      window.location.href = "https://www.google.com";
+    });
   </script>
 </body>
 </html>
