@@ -950,7 +950,7 @@
     window.addEventListener("resize", () => setActiveDot(getNearestIndex()));
 
     /* =========================
-       🔞 Age Gate Logic (20+)
+       🔞 Age Gate Logic (ถามซ้ำทุกครั้ง)
        ========================= */
     const ageGate = document.getElementById("ageGate");
     const ageYes  = document.getElementById("ageYes");
@@ -958,19 +958,16 @@
 
     function unlockSite(){
       ageGate.style.display = "none";
-      firePageViewOnce(); // ✅ ยิง PageView หลังผ่าน gate
+      firePageViewOnce(); // ✅ ยิง PageView หลังผ่าน gate (ครั้งเดียว/ต่อแท็บ)
       if (typeof window.fbq === "function") {
         window.fbq("trackCustom", "AgeVerified20Plus");
       }
     }
 
-    // ถ้าเคยยืนยันแล้ว ถามซ้ำ
-    if (localStorage.getItem("ageVerified20") === "true") {
-      unlockSite();
-    }
+    // ✅ สำคัญ: ไม่ใช้ localStorage และไม่ปลดล็อกอัตโนมัติ
+    // => จะถามทุกครั้งที่เข้าเว็บ/รีเฟรช
 
     ageYes.addEventListener("click", () => {
-      localStorage.setItem("ageVerified20", "true");
       unlockSite();
     });
 
